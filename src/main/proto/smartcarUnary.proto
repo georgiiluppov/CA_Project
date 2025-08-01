@@ -1,6 +1,8 @@
 syntax = "proto3";
 
 package smartCarUnary;
+option java_multiple_files = true;
+option java_package = "com.generated.grpc";
 
 message AccidentAlertRequest {
   int32 timestamp = 1; // timestamp of the event

@@ -1,6 +1,8 @@
 syntax = "proto3";
 
 package smartwatchClientStream;
+option java_multiple_files = true;
+option java_package = "com.generated.grpc";
 
 message StepData {
   int32 steps = 1; // Number of steps recorded in a time interval
