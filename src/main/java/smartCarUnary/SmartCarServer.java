@@ -12,13 +12,17 @@ import java.util.Date;
 
 public class SmartCarServer {
     public static void main(String[] args) throws IOException, InterruptedException {
-        Server server = ServerBuilder.forPort(9090)
-                .addService(new SmartCarServiceImpl())
-                .build();
+        try {
+            Server server = ServerBuilder.forPort(9090)
+                    .addService(new SmartCarServiceImpl())
+                    .build();
 
-        System.out.println("Starting SmartCar gRPC server on port 9090");
-        server.start();
-        server.awaitTermination();
+            System.out.println("Starting SmartCar gRPC server on port 9090");
+            server.start();
+            server.awaitTermination();
+        } catch (IOException | InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
     public static class SmartCarServiceImpl extends SmartCarServiceGrpc.SmartCarServiceImplBase {
