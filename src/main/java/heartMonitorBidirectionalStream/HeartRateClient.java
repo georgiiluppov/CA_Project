@@ -35,7 +35,6 @@ public class HeartRateClient {
         });
 
         boolean run = true;
-
         while (run) {
             int bpm = 10 + (int) (Math.random() * 241);
             System.out.println("Sending BPM: " + bpm + ". At: " + LocalTime.now());
