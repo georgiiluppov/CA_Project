@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package smartCarUnary;
+
+message AccidentAlertRequest {
+  int32 timestamp = 1; // timestamp of the event
+  string location = 2; // GPS coordinates or address
+  string status = 3; // status level, "minor", "serious"
+}
+
+message AccidentAlertResponse {
+  string message = 1; // Server message
+}
+
+service SmartCarService {
+  rpc sendAccidentAlert(AccidentAlertRequest) returns (AccidentAlertResponse);
+}

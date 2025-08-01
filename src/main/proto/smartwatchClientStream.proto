@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package smartwatchClientStream;
+
+message StepData {
+  int32 steps = 1; // Number of steps recorded in a time interval
+}
+
+message StepSummary {
+  int32 totalSteps = 1; // Total steps calculated by the server
+  double caloriesBurned = 2; // Total calories calculated
+  int32 totalActiveTime = 3; // Total active time in minutes
+  string feedback = 4; // Advice depending on the level of the activity
+}
+
+service SmartWatchService {
+  rpc trackSteps(stream StepData) returns (StepSummary);
+}

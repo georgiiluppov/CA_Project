@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package mobileAppServerStream;
+
+message HydrationRequest {
+  int32 interval_minutes = 1; // User preferred interval between reminders
+}
+
+message HydrationNotification {
+  int32 timestamp = 1; // Timestamp of the reminder
+  string message = 2; // Reminder message
+}
+
+service MobileAppService {
+  rpc hydrationReminder(HydrationRequest) returns (stream HydrationNotification);
+}

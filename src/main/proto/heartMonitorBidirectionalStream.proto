@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package heartMonitorBidirectionalStream;
+
+message HeartRate {
+  int32 bpm = 1; // Current BPM
+}
+
+message HeartRateFeedback {
+  string message = 1; // Messages from the server
+}
+
+service SmartWatchService {
+  rpc monitorHeartRate(stream HeartRate) returns (stream HeartRateFeedback);
+}
