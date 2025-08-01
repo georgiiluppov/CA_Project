@@ -12,6 +12,6 @@ message HeartRateFeedback {
   string message = 1; // Messages from the server
 }
 
-service SmartWatchService {
+service HeartRateService {
   rpc monitorHeartRate(stream HeartRate) returns (stream HeartRateFeedback);
 }

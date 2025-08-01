@@ -36,11 +36,11 @@ public final class HeartMonitorBidirectionalStream {
       "\n%heartMonitorBidirectionalStream.proto\022" +
       "\037heartMonitorBidirectionalStream\"\030\n\tHear" +
       "tRate\022\013\n\003bpm\030\001 \001(\005\"$\n\021HeartRateFeedback\022" +
-      "\017\n\007message\030\001 \001(\t2\213\001\n\021SmartWatchService\022v" +
-      "\n\020monitorHeartRate\022*.heartMonitorBidirec" +
-      "tionalStream.HeartRate\0322.heartMonitorBid" +
-      "irectionalStream.HeartRateFeedback(\0010\001B\026" +
-      "\n\022com.generated.grpcP\001b\006proto3"
+      "\017\n\007message\030\001 \001(\t2\212\001\n\020HeartRateService\022v\n" +
+      "\020monitorHeartRate\022*.heartMonitorBidirect" +
+      "ionalStream.HeartRate\0322.heartMonitorBidi" +
+      "rectionalStream.HeartRateFeedback(\0010\001B\026\n" +
+      "\022com.generated.grpcP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
