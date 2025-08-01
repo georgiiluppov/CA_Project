@@ -12,7 +12,7 @@ public interface HydrationRequestOrBuilder extends
    * User preferred interval between reminders
    * </pre>
    *
-   * <code>int32 interval_minutes = 1;</code>
+   * <code>double intervalMinutes = 1;</code>
    */
-  int getIntervalMinutes();
+  double getIntervalMinutes();
 }

@@ -28,9 +28,8 @@ public class SmartCarServer {
     public static class SmartCarServiceImpl extends SmartCarServiceGrpc.SmartCarServiceImplBase {
         @Override
         public void sendAccidentAlert(AccidentAlertRequest request, StreamObserver<AccidentAlertResponse> responseObserver) {
-            // Convert timestamp (seconds) to formatted date-time string
             long timestampSeconds = request.getTimestamp();
-            Date date = new Date(timestampSeconds * 1000L); // Convert to milliseconds
+            Date date = new Date(timestampSeconds * 1000L);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String formattedTime = sdf.format(date);
 

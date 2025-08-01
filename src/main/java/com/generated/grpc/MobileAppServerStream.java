@@ -34,14 +34,14 @@ public final class MobileAppServerStream {
   static {
     java.lang.String[] descriptorData = {
       "\n\033mobileAppServerStream.proto\022\025mobileApp" +
-      "ServerStream\",\n\020HydrationRequest\022\030\n\020inte" +
-      "rval_minutes\030\001 \001(\005\";\n\025HydrationNotificat" +
-      "ion\022\021\n\ttimestamp\030\001 \001(\005\022\017\n\007message\030\002 \001(\t2" +
-      "\200\001\n\020MobileAppService\022l\n\021hydrationReminde" +
-      "r\022\'.mobileAppServerStream.HydrationReque" +
-      "st\032,.mobileAppServerStream.HydrationNoti" +
-      "fication0\001B\026\n\022com.generated.grpcP\001b\006prot" +
-      "o3"
+      "ServerStream\"+\n\020HydrationRequest\022\027\n\017inte" +
+      "rvalMinutes\030\001 \001(\001\";\n\025HydrationNotificati" +
+      "on\022\021\n\ttimestamp\030\001 \001(\005\022\017\n\007message\030\002 \001(\t2\200" +
+      "\001\n\020MobileAppService\022l\n\021hydrationReminder" +
+      "\022\'.mobileAppServerStream.HydrationReques" +
+      "t\032,.mobileAppServerStream.HydrationNotif" +
+      "ication0\001B\026\n\022com.generated.grpcP\001b\006proto" +
+      "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
