@@ -1,5 +1,6 @@
 package heartMonitorBidirectionalStream;
 
+import RegistryDiscovery.ServiceRegistration;
 import com.generated.grpc.HeartRateServiceGrpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -14,18 +15,21 @@ public class HeartRateServer extends HeartRateServiceGrpc.HeartRateServiceImplBa
     private static final Logger logger = Logger.getLogger(HeartRateServer.class.getName());
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        int port = 50051;
+        int port = 50054;
         HeartRateServer heartRateServer = new HeartRateServer();
 
         try {
             Server server = ServerBuilder
                     .forPort(port)
                     .addService(heartRateServer)
-                    .build()
-                    .start();
+                    .build();
 
-            logger.info("Server started, listening on " + port);
-            System.out.println("Server started on port " + port);
+            System.out.println("Starting HeartMonitor gRPC server on port " + port);
+            server.start();
+
+            ServiceRegistration
+                    .getInstance()
+                    .registerService("_heartMonitor._tcp.local.", "HeartMonitor", 50054, "gRPC HeartMonitor accident service");
             server.awaitTermination();
         } catch (IOException | InterruptedException e){
             e.printStackTrace();
@@ -67,6 +71,7 @@ public class HeartRateServer extends HeartRateServiceGrpc.HeartRateServiceImplBa
             @Override
             public void onCompleted() {
                 logger.info("Client has finished sending heart rates");
+                System.out.println("Client has finished sending heart rates");
                 responseObserver.onCompleted();
             }
         };

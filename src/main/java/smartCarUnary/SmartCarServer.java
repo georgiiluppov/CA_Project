@@ -13,13 +13,16 @@ import java.util.Date;
 
 public class SmartCarServer {
     public static void main(String[] args) throws IOException, InterruptedException {
+        int port = 50051;
+        SmartCarServiceImpl heartRateServer = new SmartCarServiceImpl();
+
         try {
             Server server = ServerBuilder
-                    .forPort(50051)
-                    .addService(new SmartCarServiceImpl())
+                    .forPort(port)
+                    .addService(heartRateServer)
                     .build();
 
-            System.out.println("Starting SmartCar gRPC server on port 50051");
+            System.out.println("Starting SmartCar gRPC server on port " + port);
             server.start();
 
             ServiceRegistration
