@@ -1,5 +1,6 @@
 package smartCarUnary;
 
+import RegistryDiscovery.ServiceRegistration;
 import com.generated.grpc.AccidentAlertRequest;
 import com.generated.grpc.AccidentAlertResponse;
 import com.generated.grpc.SmartCarServiceGrpc;
@@ -21,7 +22,7 @@ public class SmartCarServer {
             System.out.println("Starting SmartCar gRPC server on port 50051");
             server.start();
 
-            SmartCarServiceRegistration
+            ServiceRegistration
                     .getInstance()
                     .registerService("_smartCar._tcp.local.", "SmartCarService", 50051, "gRPC SmartCar accident service");
             server.awaitTermination();

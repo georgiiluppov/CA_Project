@@ -34,14 +34,14 @@ public final class SmartwatchClientStream {
   static {
     java.lang.String[] descriptorData = {
       "\n\034smartwatchClientStream.proto\022\026smartwat" +
-      "chClientStream\"\031\n\010StepData\022\r\n\005steps\030\001 \001(" +
-      "\005\"d\n\013StepSummary\022\022\n\ntotalSteps\030\001 \001(\005\022\026\n\016" +
-      "caloriesBurned\030\002 \001(\001\022\027\n\017totalActiveTime\030" +
-      "\003 \001(\005\022\020\n\010feedback\030\004 \001(\t2j\n\021SmartWatchSer" +
-      "vice\022U\n\ntrackSteps\022 .smartwatchClientStr" +
-      "eam.StepData\032#.smartwatchClientStream.St" +
-      "epSummary(\001B\026\n\022com.generated.grpcP\001b\006pro" +
-      "to3"
+      "chClientStream\"2\n\010StepData\022\r\n\005steps\030\001 \001(" +
+      "\005\022\027\n\017timeForFeedback\030\002 \001(\005\"d\n\013StepSummar" +
+      "y\022\022\n\ntotalSteps\030\001 \001(\005\022\026\n\016caloriesBurned\030" +
+      "\002 \001(\001\022\027\n\017totalActiveTime\030\003 \001(\005\022\020\n\010feedba" +
+      "ck\030\004 \001(\t2j\n\021SmartWatchService\022U\n\ntrackSt" +
+      "eps\022 .smartwatchClientStream.StepData\032#." +
+      "smartwatchClientStream.StepSummary(\001B\026\n\022" +
+      "com.generated.grpcP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -60,7 +60,7 @@ public final class SmartwatchClientStream {
     internal_static_smartwatchClientStream_StepData_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_smartwatchClientStream_StepData_descriptor,
-        new java.lang.String[] { "Steps", });
+        new java.lang.String[] { "Steps", "TimeForFeedback", });
     internal_static_smartwatchClientStream_StepSummary_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_smartwatchClientStream_StepSummary_fieldAccessorTable = new

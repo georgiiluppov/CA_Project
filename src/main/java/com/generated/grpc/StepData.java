@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private StepData() {
     steps_ = 0;
+    timeForFeedback_ = 0;
   }
 
   @java.lang.Override
@@ -46,6 +47,11 @@ private static final long serialVersionUID = 0L;
           case 8: {
 
             steps_ = input.readInt32();
+            break;
+          }
+          case 16: {
+
+            timeForFeedback_ = input.readInt32();
             break;
           }
           default: {
@@ -93,6 +99,19 @@ private static final long serialVersionUID = 0L;
     return steps_;
   }
 
+  public static final int TIMEFORFEEDBACK_FIELD_NUMBER = 2;
+  private int timeForFeedback_;
+  /**
+   * <pre>
+   * What time user wants to get a feedback
+   * </pre>
+   *
+   * <code>int32 timeForFeedback = 2;</code>
+   */
+  public int getTimeForFeedback() {
+    return timeForFeedback_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -110,6 +129,9 @@ private static final long serialVersionUID = 0L;
     if (steps_ != 0) {
       output.writeInt32(1, steps_);
     }
+    if (timeForFeedback_ != 0) {
+      output.writeInt32(2, timeForFeedback_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -122,6 +144,10 @@ private static final long serialVersionUID = 0L;
     if (steps_ != 0) {
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(1, steps_);
+    }
+    if (timeForFeedback_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, timeForFeedback_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -141,6 +167,8 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && (getSteps()
         == other.getSteps());
+    result = result && (getTimeForFeedback()
+        == other.getTimeForFeedback());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -154,6 +182,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + STEPS_FIELD_NUMBER;
     hash = (53 * hash) + getSteps();
+    hash = (37 * hash) + TIMEFORFEEDBACK_FIELD_NUMBER;
+    hash = (53 * hash) + getTimeForFeedback();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -289,6 +319,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       steps_ = 0;
 
+      timeForFeedback_ = 0;
+
       return this;
     }
 
@@ -316,6 +348,7 @@ private static final long serialVersionUID = 0L;
     public com.generated.grpc.StepData buildPartial() {
       com.generated.grpc.StepData result = new com.generated.grpc.StepData(this);
       result.steps_ = steps_;
+      result.timeForFeedback_ = timeForFeedback_;
       onBuilt();
       return result;
     }
@@ -366,6 +399,9 @@ private static final long serialVersionUID = 0L;
       if (other == com.generated.grpc.StepData.getDefaultInstance()) return this;
       if (other.getSteps() != 0) {
         setSteps(other.getSteps());
+      }
+      if (other.getTimeForFeedback() != 0) {
+        setTimeForFeedback(other.getTimeForFeedback());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -430,6 +466,44 @@ private static final long serialVersionUID = 0L;
     public Builder clearSteps() {
       
       steps_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private int timeForFeedback_ ;
+    /**
+     * <pre>
+     * What time user wants to get a feedback
+     * </pre>
+     *
+     * <code>int32 timeForFeedback = 2;</code>
+     */
+    public int getTimeForFeedback() {
+      return timeForFeedback_;
+    }
+    /**
+     * <pre>
+     * What time user wants to get a feedback
+     * </pre>
+     *
+     * <code>int32 timeForFeedback = 2;</code>
+     */
+    public Builder setTimeForFeedback(int value) {
+      
+      timeForFeedback_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * What time user wants to get a feedback
+     * </pre>
+     *
+     * <code>int32 timeForFeedback = 2;</code>
+     */
+    public Builder clearTimeForFeedback() {
+      
+      timeForFeedback_ = 0;
       onChanged();
       return this;
     }

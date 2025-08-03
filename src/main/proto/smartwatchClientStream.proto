@@ -6,6 +6,7 @@ option java_package = "com.generated.grpc";
 
 message StepData {
   int32 steps = 1; // Number of steps recorded in a time interval
+  int32 timeForFeedback = 2; // What time user wants to get a feedback
 }
 
 message StepSummary {

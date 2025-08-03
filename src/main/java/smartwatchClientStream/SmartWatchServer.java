@@ -1,5 +1,6 @@
 package smartwatchClientStream;
 
+import RegistryDiscovery.ServiceRegistration;
 import com.generated.grpc.SmartWatchServiceGrpc;
 import com.generated.grpc.StepData;
 import com.generated.grpc.StepSummary;
@@ -7,6 +8,7 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -15,7 +17,7 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
 
     public static void main(String[] args) throws IOException, InterruptedException {
         SmartWatchServer smartWatchServer = new SmartWatchServer();
-        int port = 50051;
+        int port = 50052;
 
         try {
             Server server = ServerBuilder.forPort(port)
@@ -25,6 +27,10 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
 
             logger.info("Server started, listening on " + port);
             System.out.println("Server started, listening on " + port);
+
+            ServiceRegistration
+                    .getInstance()
+                    .registerService("_smartWatch._tcp.local.", "SmartWatch", port, "SmartWatch gRPC client-streaming");
 
             server.awaitTermination();
         } catch (IOException | InterruptedException e){
@@ -36,12 +42,13 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
     public StreamObserver<StepData> trackSteps(StreamObserver<StepSummary> responseObserver) {
         return new StreamObserver<StepData>() {
             ArrayList<Integer> stepsList = new ArrayList<>();
+            int hour = 0;
 
             @Override
             public void onNext(StepData stepData) {
-
+                hour = stepData.getTimeForFeedback();
                 stepsList.add(stepData.getSteps());
-                System.out.println("Received steps: " + stepData.getSteps());
+                System.out.println("Received steps: " + stepData.getSteps() + ". " + LocalTime.now());
             }
 
             @Override
@@ -62,10 +69,18 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
                 int activeTime = totalSteps / 100;
                 String feedback;
 
-                if (totalSteps < 5000) {
-                    feedback = "Try to walk more! Total steps: " + totalSteps;
+                if (hour < 23) {
+                    if (totalSteps < 5000) {
+                        feedback = "Try to walk more, you still have time today! Total steps: " + totalSteps;
+                    } else {
+                        feedback = "Nice job today! You still have time to break records. Total steps: " + totalSteps;
+                    }
                 } else {
-                    feedback = "Good job! Total steps: " + totalSteps;
+                    if (totalSteps < 5000) {
+                        feedback = "It is late, but try to move a bit more tomorrow! Total steps: " + totalSteps;
+                    } else {
+                        feedback = "Nice job today! Total steps: " + totalSteps;
+                    }
                 }
 
                 StepSummary summary = StepSummary.newBuilder()
@@ -74,6 +89,8 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
                         .setTotalActiveTime(activeTime)
                         .setFeedback(feedback)
                         .build();
+
+                System.out.println("Sending summary response at " + LocalTime.now());
 
                 responseObserver.onNext(summary);
                 responseObserver.onCompleted();

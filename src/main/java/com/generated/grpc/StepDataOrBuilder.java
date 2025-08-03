@@ -15,4 +15,13 @@ public interface StepDataOrBuilder extends
    * <code>int32 steps = 1;</code>
    */
   int getSteps();
+
+  /**
+   * <pre>
+   * What time user wants to get a feedback
+   * </pre>
+   *
+   * <code>int32 timeForFeedback = 2;</code>
+   */
+  int getTimeForFeedback();
 }
