@@ -15,7 +15,7 @@ public class SmartCarClient {
     public static void main(String[] args) {
         try {
             JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
-            ServiceInfo serviceInfo = jmdns.getServiceInfo("_smartCar._tcp.local.", "SmartCarService", 50051);
+            ServiceInfo serviceInfo = jmdns.getServiceInfo("_smartCar._tcp.local.", "SmartCarService");
             jmdns.close();
 
             if (serviceInfo == null) {
