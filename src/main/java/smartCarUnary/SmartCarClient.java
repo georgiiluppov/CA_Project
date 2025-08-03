@@ -15,6 +15,7 @@ public class SmartCarClient {
     public static void main(String[] args) {
         try {
             JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+            Thread.sleep(3000);
             ServiceInfo serviceInfo = jmdns.getServiceInfo("_smartCar._tcp.local.", "SmartCarService");
             jmdns.close();
 
@@ -57,6 +58,7 @@ public class SmartCarClient {
             channel.awaitTermination(5, TimeUnit.SECONDS);
         } catch (InterruptedException | IOException e){
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
