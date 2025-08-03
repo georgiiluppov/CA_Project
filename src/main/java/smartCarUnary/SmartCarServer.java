@@ -13,12 +13,17 @@ import java.util.Date;
 public class SmartCarServer {
     public static void main(String[] args) throws IOException, InterruptedException {
         try {
-            Server server = ServerBuilder.forPort(9090)
+            Server server = ServerBuilder
+                    .forPort(50051)
                     .addService(new SmartCarServiceImpl())
                     .build();
 
-            System.out.println("Starting SmartCar gRPC server on port 9090");
+            System.out.println("Starting SmartCar gRPC server on port 50051");
             server.start();
+
+            SmartCarServiceRegistration
+                    .getInstance()
+                    .registerService("_smartCar._tcp.local.", "SmartCarService", 50051, "gRPC SmartCar accident service");
             server.awaitTermination();
         } catch (IOException | InterruptedException e){
             e.printStackTrace();
@@ -33,9 +38,19 @@ public class SmartCarServer {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String formattedTime = sdf.format(date);
 
+            System.out.println("Received request: " + formattedTime);
+
+            String message = " ";
+            if (request.getStatus().equalsIgnoreCase("Serious")){
+                message = "Status received: " + request.getStatus() +  ". Sending details to emergency services.";
+            } else if (request.getStatus().equalsIgnoreCase("Minor")){
+                message = "Status received: " + request.getStatus() +  ". Please confirm if you require emergency services.";
+            }
+
+            System.out.println("Sending response: " + formattedTime);
+
             String responseMsg = "Alert: [" + formattedTime + "] at " + request.getLocation()
-                    + " with status: " + request.getStatus()
-                    + ". Sending details to emergency services.";
+                    + ". " + message;
 
             AccidentAlertResponse response = AccidentAlertResponse.newBuilder()
                     .setMessage(responseMsg)
