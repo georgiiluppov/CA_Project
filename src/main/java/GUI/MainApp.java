@@ -11,6 +11,7 @@ public class MainApp {
             JTabbedPane tabbedPane = new JTabbedPane();
             tabbedPane.addTab("Smart Car", new GUISmartCar());
             tabbedPane.addTab("Smart Watch", new GUISmartWatch());
+            tabbedPane.addTab("Mobile App", new GUIMobileApp());
 
             frame.setContentPane(tabbedPane);
             frame.pack();

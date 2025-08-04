@@ -111,7 +111,7 @@ public class GUISmartWatch extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startServerSmartWatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerSmartWatchButtonActionPerformed
-                if (isServerRunning) {
+        if (isServerRunning) {
             return; 
         }
         isServerRunning = true;
@@ -132,7 +132,7 @@ public class GUISmartWatch extends javax.swing.JPanel {
     }//GEN-LAST:event_startServerSmartWatchButtonActionPerformed
 
     private void startClientSmartWatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startClientSmartWatchButtonActionPerformed
-                if (!isServerRunning) {
+        if (!isServerRunning) {
             SwingUtilities.invokeLater(() -> 
                 textAreaClientSmartWatch.append("Cannot start client: Server is not running.")
             );
