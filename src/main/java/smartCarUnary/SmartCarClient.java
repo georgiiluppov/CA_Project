@@ -12,7 +12,8 @@ import java.net.InetAddress;
 import java.util.concurrent.TimeUnit;
 
 public class SmartCarClient {
-    public static void main(String[] args) {
+    public static String sendRandomAccidentAlert() {
+        String result = "";
         try {
             // Creating JmDNS instance for local host
             JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
@@ -25,8 +26,9 @@ public class SmartCarClient {
 
             // If service was not found, print error and stop
             if (serviceInfo == null) {
-                System.err.println("SmartCar gRPC service not found.");
-                return;
+                result = "SmartCar gRPC service not found.";
+                System.err.println(result);
+                return result;
             }
 
             // Getting host IP and port from service info
@@ -67,16 +69,21 @@ public class SmartCarClient {
 
             // Call gRPC method and get response
             AccidentAlertResponse response = stub.sendAccidentAlert(request);
-            System.out.println(response.getMessage());
+            result = response.getMessage();
+            System.out.println(result);
 
             // Shutdown the channel
             channel.shutdown();
-            // Wait up to 5 seconds for termination
             channel.awaitTermination(5, TimeUnit.SECONDS);
         } catch (InterruptedException | IOException e){
-            // Printing stack trace and error message
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            result = "Error: " + e.getMessage();
         }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        sendRandomAccidentAlert();
     }
 }

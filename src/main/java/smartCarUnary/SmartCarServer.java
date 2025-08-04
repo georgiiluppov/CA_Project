@@ -13,6 +13,41 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SmartCarServer {
+    private Server server;
+
+    public void startServer() throws IOException {
+        int port = 50051;
+        SmartCarServiceImpl heartRateServer = new SmartCarServiceImpl();
+
+        try {
+            // Building the server
+            server = ServerBuilder
+                    .forPort(port)
+                    .addService(heartRateServer)
+                    .build();
+
+            System.out.println("Starting SmartCar gRPC server on port " + port);
+            // Start the server
+            server.start();
+
+            // Register service with discovery system
+            ServiceRegistration
+                    .getInstance()
+                    .registerService("_smartCar._tcp.local.", "SmartCarService", 50051, "gRPC SmartCar accident service");
+        } catch (IOException e){
+            // Printing stack trace and error message
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void stopServer() throws InterruptedException {
+        if (server != null) {
+            server.shutdown().awaitTermination();
+        }
+    }
+
+    // Keep your original main method for standalone runs
     public static void main(String[] args) throws IOException, InterruptedException {
         int port = 50051;
         SmartCarServiceImpl heartRateServer = new SmartCarServiceImpl();
