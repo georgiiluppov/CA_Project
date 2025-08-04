@@ -20,7 +20,9 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
         int port = 50052;
 
         try {
+            // Build gRPC server with client ID interceptor and service implementation
             Server server = ServerBuilder.forPort(port)
+                    .intercept(new ClientIdInterceptor())
                     .addService(smartWatchServer)
                     .build()
                     .start();
@@ -28,25 +30,33 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
             logger.info("Server started, listening on " + port);
             System.out.println("Server started, listening on " + port);
 
+            // Register service for discovery on local network
             ServiceRegistration
                     .getInstance()
                     .registerService("_smartWatch._tcp.local.", "SmartWatch", port, "SmartWatch gRPC client-streaming");
 
             server.awaitTermination();
         } catch (IOException | InterruptedException e){
+            // Printing stack trace and message error
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
+    // Implementation of client streaming gRPC method
     @Override
     public StreamObserver<StepData> trackSteps(StreamObserver<StepSummary> responseObserver) {
         return new StreamObserver<StepData>() {
+            // List to store steps received from the client
             ArrayList<Integer> stepsList = new ArrayList<>();
+            // Hour variable for feedback
             int hour = 0;
 
             @Override
             public void onNext(StepData stepData) {
+                // Update hour from latest message
                 hour = stepData.getTimeForFeedback();
+                // Add steps to list
                 stepsList.add(stepData.getSteps());
                 System.out.println("Received steps: " + stepData.getSteps() + ". " + LocalTime.now());
             }
@@ -59,16 +69,19 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
             @Override
             public void onCompleted() {
                 System.out.println("Step data stream completed.");
-
+                // Calculate total steps
                 int totalSteps = 0;
                 for (int steps : stepsList) {
                     totalSteps += steps;
                 }
 
+                // Estimate calories burned
                 double calories = totalSteps * 0.1;
+                // Estimate active time in minutes
                 int activeTime = totalSteps / 100;
                 String feedback;
 
+                // Provide feedback based on time (the client set to receive) and total steps by that moment
                 if (hour < 23) {
                     if (totalSteps < 5000) {
                         feedback = "Try to walk more, you still have time today! Total steps: " + totalSteps;
@@ -83,6 +96,7 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
                     }
                 }
 
+                // Building summary message to send back to the client
                 StepSummary summary = StepSummary.newBuilder()
                         .setTotalSteps(totalSteps)
                         .setCaloriesBurned(calories)
@@ -92,7 +106,9 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
 
                 System.out.println("Sending summary response at " + LocalTime.now());
 
+                // Sending summary to the client
                 responseObserver.onNext(summary);
+                // Finishing call
                 responseObserver.onCompleted();
             }
         };

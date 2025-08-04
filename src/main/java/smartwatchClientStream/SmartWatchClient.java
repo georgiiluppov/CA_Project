@@ -3,8 +3,8 @@ package smartwatchClientStream;
 import com.generated.grpc.SmartWatchServiceGrpc;
 import com.generated.grpc.StepData;
 import com.generated.grpc.StepSummary;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
+import io.grpc.*;
+import io.grpc.stub.MetadataUtils;
 import io.grpc.stub.StreamObserver;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
@@ -19,30 +19,60 @@ public class SmartWatchClient {
 
     public static void main(String[] args) throws InterruptedException {
         try {
+            // Create JmDNS instance to discover services on local network
             JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+            // Wait a bit for discovery (without this line client cannot find service if
+            // both client/server have been started simultaneously
+            Thread.sleep(3000);
+            // Look for service called "SmartWatch" and type "_smartWatch._tcp.local."
             ServiceInfo serviceInfo = jmdns.getServiceInfo("_smartWatch._tcp.local.", "SmartWatch");
             jmdns.close();
 
+            // If service was not found, print error and stop
             if (serviceInfo == null) {
                 System.err.println("SmartWatch gRPC service not found.");
                 return;
             }
 
+            // Getting host IP and port from service info
             String host = serviceInfo.getHostAddresses()[0];
             int port = serviceInfo.getPort();
             System.out.println("Discovered SmartWatch service at " + host + " Port: " + port);
 
+            // Create gRPC channel to connect to the server
             ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port)
                     .usePlaintext()
                     .build();
 
-            asyncStub = SmartWatchServiceGrpc.newStub(channel);
+            // Client ID string to send with requests
+            String clientId = "watch-#-9999";
+            // Metadata container
+            Metadata metadata = new Metadata();
+            // Metadata key for "client-id"
+            Metadata.Key<String> clientIdKey = Metadata.Key.of("client-id", Metadata.ASCII_STRING_MARSHALLER);
+            // Put client ID value into metadata
+            metadata.put(clientIdKey, clientId);
 
+            // Check if clientId is valid (not null or empty)
+            if (clientId == null || clientId.isEmpty()) {
+                System.err.println("No client ID provided. Cannot proceed.");
+                return;
+            }
+
+            // Create interceptor to attach metadata to the call
+            ClientInterceptor interceptor = MetadataUtils.newAttachHeadersInterceptor(metadata);
+            Channel interceptedChannel = ClientInterceptors.intercept(channel, interceptor);
+            // Async stub
+            asyncStub = SmartWatchServiceGrpc.newStub(interceptedChannel);
+
+            // CountDownLatch is to wait for server to complete
             CountDownLatch latch = new CountDownLatch(1);
 
+            // Observer to handle server responses
             StreamObserver<StepSummary> responseObserver = new StreamObserver<StepSummary>() {
                 @Override
                 public void onNext(StepSummary stepSummary) {
+                    // Printing summary data received from server
                     System.out.println("Summary received:");
                     System.out.println("Total Steps: " + stepSummary.getTotalSteps());
                     System.out.println("Calories Burned: " + stepSummary.getCaloriesBurned());
@@ -52,50 +82,78 @@ public class SmartWatchClient {
 
                 @Override
                 public void onError(Throwable t) {
+                    // Printing error message and count down latch
                     System.err.println("Error in receiving summary: " + t);
                     latch.countDown();
                 }
 
                 @Override
                 public void onCompleted() {
+                    // Server finished sending response, count down latch
                     System.out.println("Server completed sending response");
                     latch.countDown();
                 }
             };
 
+            // Start client streaming call to server with response observer
             StreamObserver<StepData> requestObserver = asyncStub.trackSteps(responseObserver);
 
+            // Array of steps to send to the server
             int[] stepsArray = {
                     90, 45, 50, 600, 35, 70, 80, 25, 40, 55,
                     100, 120, 90, 30, 20, 75, 65, 500, 60, 40,
                     20, 55, 90, 700, 35, 80, 40, 95, 50, 750
             };
 
+            // Random hour for feedback time (user sets this data initially, to receive a feedback at specific hour)
             int timeForFeedback = (int) (Math.random() * 24) + 1;
-            System.out.println("Random hour: " + timeForFeedback);
 
             try {
+                // Loop to send steps array to the server with delay of 1 sec
                 for (int steps : stepsArray) {
+                    // Building stepData message with steps and timeForFeedback
                     StepData stepData = StepData.newBuilder()
                             .setSteps(steps)
                             .setTimeForFeedback(timeForFeedback)
                             .build();
 
                     System.out.println("Sending steps: " + steps + " at " + LocalTime.now());
+                    // Sending message to server
                     requestObserver.onNext(stepData);
+                    // Wait 1 second between sending
                     Thread.sleep(1000);
                 }
             } catch (RuntimeException | InterruptedException e) {
+                // Printing stack trace and message error
                 e.printStackTrace();
+                System.out.println(e.getMessage());
             }
 
+            System.out.println("---------------------------------");
+
+            // Determining if it is AM/PM, based on random hour generated before
+            String amPm = "";
+            if (timeForFeedback >= 0 && timeForFeedback < 12) {
+                amPm = "AM";
+            } else if (timeForFeedback >= 12 && timeForFeedback <= 23) {
+                amPm = "PM";
+            }
+
+            System.out.println("Random hour: " + timeForFeedback + " " + amPm);
+
+            // Finishing sending
             requestObserver.onCompleted();
 
+            // Wait for response or timeout
             latch.await(10, TimeUnit.SECONDS);
+
+            // Shutdown channel
             channel.shutdown();
             channel.awaitTermination(5, TimeUnit.SECONDS);
         } catch (IOException e){
+            // Printing exception if discovery or connection fails
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
