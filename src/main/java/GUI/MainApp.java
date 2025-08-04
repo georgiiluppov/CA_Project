@@ -12,7 +12,8 @@ public class MainApp {
             tabbedPane.addTab("Smart Car", new GUISmartCar());
             tabbedPane.addTab("Smart Watch", new GUISmartWatch());
             tabbedPane.addTab("Mobile App", new GUIMobileApp());
-
+            tabbedPane.addTab("Heart Monitor", new GUIHeartMonitor());
+            
             frame.setContentPane(tabbedPane);
             frame.pack();
             frame.setLocationRelativeTo(null);
