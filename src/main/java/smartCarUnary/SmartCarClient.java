@@ -12,44 +12,32 @@ import java.net.InetAddress;
 import java.util.concurrent.TimeUnit;
 
 public class SmartCarClient {
-    public static String sendRandomAccidentAlert() {
-        String result = "";
+    public static void main(String[] args) {
         try {
-            // Creating JmDNS instance for local host
             JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
-            // Wait a bit for discovery (without this line client cannot find service if
-            // both client/server have been started simultaneously
             Thread.sleep(3000);
-            // Lookup service info by type and name
             ServiceInfo serviceInfo = jmdns.getServiceInfo("_smartCar._tcp.local.", "SmartCarService");
             jmdns.close();
 
-            // If service was not found, print error and stop
             if (serviceInfo == null) {
-                result = "SmartCar gRPC service not found.";
-                System.err.println(result);
-                return result;
+                System.err.println("SmartCar gRPC service not found.");
+                return;
             }
 
-            // Getting host IP and port from service info
             String host = serviceInfo.getHostAddresses()[0];
             int port = serviceInfo.getPort();
             System.out.println("Discovered SmartCar service at " + host + " Port: " + port);
 
-            // Create gRPC channel to connect to the server
             ManagedChannel channel = ManagedChannelBuilder
                     .forAddress(host, port)
                     .usePlaintext()
                     .build();
 
-            // Creating blocking stub for service calls
             SmartCarServiceGrpc.SmartCarServiceBlockingStub stub = SmartCarServiceGrpc.newBlockingStub(channel);
 
-            // Generate random num (severity) between 1 and 10
             int severity = (int) (Math.random() * 10) + 1;
             String status;
 
-            // Condition if severity less than or equal to 5 (assigns "Minor"/"Serious")
             if (severity <= 5){
                 status = "Minor";
             } else {
@@ -57,33 +45,20 @@ public class SmartCarClient {
             }
             System.out.println("Severity: " + severity);
 
-            // Building request object
             AccidentAlertRequest request = AccidentAlertRequest.newBuilder()
-                    // Setting current time in seconds
                     .setTimestamp((int) (System.currentTimeMillis() / 1000))
-                    // Setting location string
                     .setLocation("53.34919551832582, -6.241966724377")
-                    // Setting accident status
                     .setStatus(status)
                     .build();
 
-            // Call gRPC method and get response
             AccidentAlertResponse response = stub.sendAccidentAlert(request);
-            result = response.getMessage();
-            System.out.println(result);
+            System.out.println(response.getMessage());
 
-            // Shutdown the channel
             channel.shutdown();
             channel.awaitTermination(5, TimeUnit.SECONDS);
         } catch (InterruptedException | IOException e){
             e.printStackTrace();
-            result = "Error: " + e.getMessage();
+            System.out.println(e.getMessage());
         }
-
-        return result;
-    }
-
-    public static void main(String[] args) {
-        sendRandomAccidentAlert();
     }
 }
