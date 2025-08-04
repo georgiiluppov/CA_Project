@@ -15,23 +15,30 @@ public class MobileAppServer extends MobileAppServiceGrpc.MobileAppServiceImplBa
     private static final Logger logger = Logger.getLogger(MobileAppServer.class.getName());
 
     public static void main(String[] args) {
+        int port = 50053;
+        MobileAppServer mobileAppServer = new MobileAppServer();
+
         try {
+            // Building the server
             Server server = ServerBuilder
-                    .forPort(50053)
-                    .addService(new MobileAppServer())
+                    .forPort(port)
+                    .addService(mobileAppServer)
                     .build();
 
             System.out.println("Starting MobileApp gRPC server on port 50053");
+            // Start the server
             server.start();
 
+            // Register service with discovery system
             ServiceRegistration
                     .getInstance()
                     .registerService("_mobileApp._tcp.local.", "MobileApp", 50053,
                             "gRPC MobileApp hydration reminder service");
-
             server.awaitTermination();
         } catch (IOException | InterruptedException e) {
+            // Printing stack trace and error message
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -40,22 +47,33 @@ public class MobileAppServer extends MobileAppServiceGrpc.MobileAppServiceImplBa
         double intervalMinutes = request.getIntervalMinutes();
 
         try {
+            // Loop to keep the server sending messages only 10 times, not indefinitely
             for (int i = 0; i < 10; i++) {
+                // Build the notification message with current time
                 HydrationNotification notification = HydrationNotification.newBuilder()
                         .setMessage("Time to drink water! " + LocalTime.now())
                         .build();
 
+                // Sending notification to the client
                 System.out.println("Sending reminder " + (i + 1) + " at " + LocalTime.now());
                 responseObserver.onNext(notification);
 
-                if (i < 9) {
-                    Thread.sleep((long) (intervalMinutes * 10 * 1000));
-                }
+                // Simulate interval delay between reminders (interval * 10 * 100ms)
+                Thread.sleep((long) (intervalMinutes * 10 * 100));
+
+                // This part is to simulate server delay longer than deadline of the client (65s)
+//                if (i == 5){
+//                    Thread.sleep(65000);
+//                }
             }
+
+            // Streaming is complete
             responseObserver.onCompleted();
         } catch (InterruptedException e) {
             logger.info("Closing stream");
             System.out.println("Closing stream");
+            // Printing stack trace and error message
+            System.out.println(e.getMessage());
             responseObserver.onCompleted();
         }
     }
