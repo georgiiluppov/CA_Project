@@ -146,7 +146,9 @@ public class GUISmartWatch extends javax.swing.JPanel {
                 textAreaClientSmartWatch.append("Cannot start client: Server is not running.")
             );
         return;
-    }
+        }
+        
+        textAreaClientSmartWatch.append("Waiting for a respond...");
         
         new Thread(() -> {
             java.io.PrintStream originalOut = System.out;

@@ -45,12 +45,11 @@ public class MobileAppClient {
 
             // Adding deadline of 60 seconds to stub (if server does not respond, it will stop)
             MobileAppServiceGrpc.MobileAppServiceStub asyncStub = MobileAppServiceGrpc.newStub(channel)
-                            .withDeadlineAfter(60, TimeUnit.SECONDS);
+                            .withDeadlineAfter(15, TimeUnit.SECONDS);
 
             try {
                 // Building request with interval (in this case just every sec to demonstrate)
                 HydrationRequest request = HydrationRequest.newBuilder()
-                        .setIntervalMinutes(1)
                         .build();
 
                 // Define what the client does when it receives messages from the server
@@ -65,9 +64,11 @@ public class MobileAppClient {
                     public void onError(Throwable t) {
                         // If an error occurs during the stream (long waiting etc)
                         if (Status.fromThrowable(t).getCode() == Status.Code.DEADLINE_EXCEEDED) {
-                            System.err.println("Request timed out: server took too long to respond.");
+                            System.out.println();
+                            System.out.println("Request timed out: server took too long to respond.");
+                            System.out.println("Finishing stream...");
                         } else {
-                            System.err.println("Error during hydration reminder: " + t.getMessage());
+                            System.out.println("Error during hydration reminder: " + t.getMessage());
                         }
                     }
 
