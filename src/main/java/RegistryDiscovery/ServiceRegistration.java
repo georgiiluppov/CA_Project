@@ -25,7 +25,9 @@ public class ServiceRegistration {
     public void registerService(String type, String name, int port, String info) throws IOException {
         ServiceInfo serviceInfo = ServiceInfo.create(type, name, port, info);
         jmdns.registerService(serviceInfo);
-        System.out.println("Registered Service: " + serviceInfo.toString());
+        System.out.println("Name: " + name);
+        System.out.println("Port: " + port);
+        System.out.println("Info: " + info);
     }
 }
 

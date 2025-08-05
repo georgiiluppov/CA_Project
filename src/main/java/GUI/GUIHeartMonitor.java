@@ -7,6 +7,8 @@ import javax.swing.*;
 
 public class GUIHeartMonitor extends javax.swing.JPanel {
     private boolean isServerRunning = false;
+    private boolean isCkientRunning = false;
+    
     public GUIHeartMonitor() {
         initComponents();
     }
@@ -44,6 +46,9 @@ public class GUIHeartMonitor extends javax.swing.JPanel {
         textAreaHeartMonitorServer = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         textAreaHeartMonitorClient = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        interruptBidirectionalStreamButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Heart Monitor - Bidirectional Stream");
@@ -72,38 +77,64 @@ public class GUIHeartMonitor extends javax.swing.JPanel {
         textAreaHeartMonitorClient.setRows(5);
         jScrollPane2.setViewportView(textAreaHeartMonitorClient);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("There is a 3 seconds delay just to make sure that service is registered");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Stream will continue for 30 iterations unless user presses the button \"interrupt stream\"");
+
+        interruptBidirectionalStreamButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        interruptBidirectionalStreamButton.setText("Interrupt stream");
+        interruptBidirectionalStreamButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                interruptBidirectionalStreamButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(425, 425, 425))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(442, 442, 442)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(startServerHeartMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1163, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2)
-                            .addComponent(startClientHeartMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startServerHeartMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(startClientHeartMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(interruptBidirectionalStreamButton, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addGap(37, 37, 37)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(70, 70, 70)
                 .addComponent(startServerHeartMonitor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(startClientHeartMonitor)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(startClientHeartMonitor)
+                    .addComponent(interruptBidirectionalStreamButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -130,12 +161,13 @@ public class GUIHeartMonitor extends javax.swing.JPanel {
 
     private void startClientHeartMonitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startClientHeartMonitorActionPerformed
         if (!isServerRunning) {
-            SwingUtilities.invokeLater(() -> 
-                textAreaHeartMonitorClient.append("Cannot start client: Server is not running.")
-            );
-        return;
-    }
+            JOptionPane.showMessageDialog(this, "Cannot start client: Server is not running.");
+            return;
+        }
+        isCkientRunning = true;
+        stopStreamGUI = false;
         
+        textAreaHeartMonitorClient.append("Waiting service to be discovered...");
         new Thread(() -> {
             java.io.PrintStream originalOut = System.out;
             System.setOut(getPrintStreamFor(textAreaHeartMonitorClient));
@@ -150,9 +182,28 @@ public class GUIHeartMonitor extends javax.swing.JPanel {
         }).start();
     }//GEN-LAST:event_startClientHeartMonitorActionPerformed
 
+    public static boolean stopStreamGUI = false;
+    private void interruptBidirectionalStreamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interruptBidirectionalStreamButtonActionPerformed
+        if (!isServerRunning) {
+            JOptionPane.showMessageDialog(this, "Cannot interrupt client: Server is not running.");
+            return;
+        }
+        
+        if(!isCkientRunning){
+            JOptionPane.showMessageDialog(this, "Please start the stream first");
+            return;
+        }
+        
+        stopStreamGUI = true;
+        textAreaHeartMonitorClient.append("Stream interruption requested by user");
+    }//GEN-LAST:event_interruptBidirectionalStreamButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton interruptBidirectionalStreamButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton startClientHeartMonitor;

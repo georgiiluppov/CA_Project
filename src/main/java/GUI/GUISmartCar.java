@@ -49,6 +49,7 @@ public GUISmartCar() {
         jLabel3 = new javax.swing.JLabel();
         severityTextField = new javax.swing.JTextField();
         severityButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         startServerButtonSmartCar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         startServerButtonSmartCar.setText("Start Server");
@@ -98,6 +99,9 @@ public GUISmartCar() {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("There is a 3 seconds delay just to make sure that service is registered");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,7 +115,9 @@ public GUISmartCar() {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(startClientButtonSmartCar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 1008, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -151,7 +157,9 @@ public GUISmartCar() {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
-                .addComponent(startClientButtonSmartCar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(startClientButtonSmartCar)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(7, Short.MAX_VALUE))
@@ -209,10 +217,8 @@ public GUISmartCar() {
 
     private void startClientButtonSmartCarActionPerformed(java.awt.event.ActionEvent evt) {
         if (!isServerRunning) {
-            SwingUtilities.invokeLater(() -> 
-                textAreaSmartCarClient.append("Cannot start client: Server is not running.")
-            );
-        return;
+            JOptionPane.showMessageDialog(this, "Cannot start client: Server is not running.");
+            return;
         }
 
         new Thread(() -> {
@@ -233,6 +239,7 @@ public GUISmartCar() {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton severityButton;

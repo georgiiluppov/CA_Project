@@ -1,10 +1,12 @@
 package heartMonitorBidirectionalStream;
 
+import GUI.GUIHeartMonitor;
 import com.generated.grpc.HeartRate;
 import com.generated.grpc.HeartRateFeedback;
 import com.generated.grpc.HeartRateServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
@@ -66,8 +68,9 @@ public class HeartRateClient {
                 }
             });
 
-            // Send 10 heart rate messages to the server, 1 per 3 seconds
-            for (int i = 0; i < 10; i++) {
+
+            // Send 30 heart rate messages to the server, 1 per 5 seconds
+            for (int i = 0; i < 30; i++) {
                 // Generate a random bpm value between 10 and 250 (BPM)
                 int bpm = 10 + (int) (Math.random() * 241);
                 System.out.println("-----------------------------------------------");
@@ -79,21 +82,18 @@ public class HeartRateClient {
                 requestObserver.onNext(heartRate);
 
                 // Sleep for 3 seconds before sending next message
-                Thread.sleep(3000);
+                Thread.sleep(5000);
 
-                // When i == 5, cancel the stream from the client side
-
-//                if (i == 5) {
-//                    System.out.println("Client cancelling the stream");
-//                    requestObserver.onError(
-//                            Status.CANCELLED
-//                                    .withDescription("Client cancelled the stream after 5 messages")
-//                                    .asRuntimeException()
-//                    );
-//                    break;
-//                }
+                if (GUIHeartMonitor.stopStreamGUI){
+                    System.out.println("Client cancelling the stream");
+                    requestObserver.onError(
+                            Status.CANCELLED
+                                    .withDescription("Client cancelled the stream after 5 messages")
+                                    .asRuntimeException()
+                    );
+                    break;
+                }
             }
-
 
             // If the stream was not cancelled, complete it normally
             requestObserver.onCompleted();
