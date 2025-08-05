@@ -45,6 +45,10 @@ public GUISmartCar() {
         jScrollPane2 = new javax.swing.JScrollPane();
         textAreaSmartCarClient = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        severityTextField = new javax.swing.JTextField();
+        severityButton = new javax.swing.JButton();
 
         startServerButtonSmartCar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         startServerButtonSmartCar.setText("Start Server");
@@ -75,6 +79,25 @@ public GUISmartCar() {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Smart Car - Unary service");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Please, enter severity (a number between 1 and 10) ");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("If this field is empty, the number will be randomly generated");
+
+        severityTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                severityTextFieldActionPerformed(evt);
+            }
+        });
+
+        severityButton.setText("Submit");
+        severityButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                severityButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,30 +115,77 @@ public GUISmartCar() {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(456, 456, 456)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(startServerButtonSmartCar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(startServerButtonSmartCar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(462, 462, 462)
+                                .addComponent(jLabel1)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(278, 278, 278)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(severityButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(severityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
+                .addGap(39, 39, 39)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(severityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(severityButton))
+                .addGap(56, 56, 56)
                 .addComponent(startServerButtonSmartCar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(24, 24, 24)
                 .addComponent(startClientButtonSmartCar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(7, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void severityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_severityTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_severityTextFieldActionPerformed
+
+    private Integer userSeverity = null;
+    private void severityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_severityButtonActionPerformed
+        String input = severityTextField.getText().trim();
+        if (input.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No severity entered. It will be randomly generated by the client.");
+            SmartCarClient.severityFromGUI = null; 
+        } else {
+            try {
+                int userSeverity = Integer.parseInt(input);
+
+                if (userSeverity >= 1 && userSeverity <= 10) {
+                    JOptionPane.showMessageDialog(this, "Number has been set: " + userSeverity);
+                    SmartCarClient.severityFromGUI = userSeverity; 
+                } else {
+                    JOptionPane.showMessageDialog(this, "Number will be randomly generated");
+                    SmartCarClient.severityFromGUI = null;
+                }
+            
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Number will be randomly generated");
+                SmartCarClient.severityFromGUI = null;
+            }
+        }
+    }//GEN-LAST:event_severityButtonActionPerformed
 
     private void startServerButtonSmartCarActionPerformed(java.awt.event.ActionEvent evt) {
         if (isServerRunning) {
@@ -143,8 +213,8 @@ public GUISmartCar() {
                 textAreaSmartCarClient.append("Cannot start client: Server is not running.")
             );
         return;
-    }
-        
+        }
+
         new Thread(() -> {
             java.io.PrintStream originalOut = System.out;
             System.setOut(getPrintStreamFor(textAreaSmartCarClient));
@@ -161,8 +231,12 @@ public GUISmartCar() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton severityButton;
+    private javax.swing.JTextField severityTextField;
     private javax.swing.JButton startClientButtonSmartCar;
     private javax.swing.JButton startServerButtonSmartCar;
     private javax.swing.JTextArea textAreaSmartCarClient;

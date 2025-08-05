@@ -12,6 +12,8 @@ import java.net.InetAddress;
 import java.util.concurrent.TimeUnit;
 
 public class SmartCarClient {
+    public static Integer severityFromGUI = null;
+    
     public static void main(String[] args) {
         try {
             JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
@@ -34,8 +36,14 @@ public class SmartCarClient {
                     .build();
 
             SmartCarServiceGrpc.SmartCarServiceBlockingStub stub = SmartCarServiceGrpc.newBlockingStub(channel);
-
-            int severity = (int) (Math.random() * 10) + 1;
+            
+            int severity;
+            if (severityFromGUI != null) {
+                severity = severityFromGUI;
+            } else {
+                severity = (int) (Math.random() * 10) + 1;
+            }
+            
             String status;
 
             if (severity <= 5){
