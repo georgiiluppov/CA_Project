@@ -1,5 +1,6 @@
 package smartCarUnary;
 
+import GUI.GUISmartCar;
 import com.generated.grpc.AccidentAlertRequest;
 import com.generated.grpc.AccidentAlertResponse;
 import com.generated.grpc.SmartCarServiceGrpc;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class SmartCarClient {
     // Static var to assign input from GUI
     public static Integer severityFromGUI = null;
-    
+
     public static void main(String[] args) {
         try {
             // Create JmDNS instance to discover services on local network
@@ -57,13 +58,16 @@ public class SmartCarClient {
 
             // Define accident status based on severity
             String status;
-            if (severity <= 5){
+            
+            if (GUISmartCar.makeStatusEmptyGUI){
+                status = "";
+            } else if (severity <= 5){
                 status = "Minor";
             } else {
                 status = "Serious";
             }
             System.out.println("Severity: " + severity);
-
+            
             // Building gRPC request message
             AccidentAlertRequest request = AccidentAlertRequest.newBuilder()
                     .setTimestamp((int) (System.currentTimeMillis() / 1000))

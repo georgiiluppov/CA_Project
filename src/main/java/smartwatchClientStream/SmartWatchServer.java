@@ -59,6 +59,7 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
                 // Add steps to list
                 stepsList.add(stepData.getSteps());
                 System.out.println("Received steps: " + stepData.getSteps() + ". " + LocalTime.now());
+                System.out.println("--------------------------------------");
             }
 
             @Override

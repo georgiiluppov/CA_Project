@@ -2,6 +2,7 @@ package smartwatchClientStream;
 import io.grpc.*;
 
 public class ClientIdInterceptor implements ServerInterceptor {
+    public static boolean stopStreamInvalidID = false;
     // Interceptor to check client ID from request metadata (in case if it is empty)
     // or for the future work, like sorting users etc
     @Override
@@ -10,6 +11,7 @@ public class ClientIdInterceptor implements ServerInterceptor {
             Metadata headers,
             ServerCallHandler<ReqT, RespT> next
     ) {
+
         // Getting client-id value
         String clientId = headers.get(Metadata.Key.of("client-id", Metadata.ASCII_STRING_MARSHALLER));
         System.out.println("Received client-id: " + clientId);
@@ -17,7 +19,12 @@ public class ClientIdInterceptor implements ServerInterceptor {
         // If clientId is missing or empty, reject the call
         if (clientId == null || clientId.isEmpty()) {
             call.close(Status.PERMISSION_DENIED.withDescription("Invalid client ID"), new Metadata());
+            stopStreamInvalidID = true;
             // Return empty listener to stop call processing
+            return new ServerCall.Listener<ReqT>() {};
+        } else if (!clientId.equals("watch-01") && !clientId.equals("watch-02") && !clientId.equals("watch-03")) {
+            stopStreamInvalidID = true;
+            call.close(Status.PERMISSION_DENIED.withDescription("Invalid client ID"), new Metadata());
             return new ServerCall.Listener<ReqT>() {};
         }
 

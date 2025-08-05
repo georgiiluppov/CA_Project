@@ -15,6 +15,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 public class SmartWatchClient {
+    public static String userIDGUI;
     private static SmartWatchServiceGrpc.SmartWatchServiceStub asyncStub;
 
     public static void main(String[] args) throws InterruptedException {
@@ -45,7 +46,8 @@ public class SmartWatchClient {
                     .build();
 
             // Client ID string to send with requests
-            String clientId = "watch-#-9999";
+            String clientId = userIDGUI;
+            
             // Metadata container
             Metadata metadata = new Metadata();
             // Metadata key for "client-id"
@@ -100,9 +102,8 @@ public class SmartWatchClient {
 
             // Array of steps to send to the server
             int[] stepsArray = {
-                    90, 45, 50, 600, 35, 70, 80, 25, 40, 55,
-                    100, 120, 90, 30, 20, 75, 65, 500, 60, 40,
-                    20, 55, 90, 700, 35, 80, 40, 95, 50, 750
+                    900, 45, 50, 600, 35, 700, 800, 25, 400, 550,
+                    100, 120, 900, 300, 200, 750, 65, 500, 60, 40
             };
 
             // Random hour for feedback time (user sets this data initially, to receive a feedback at specific hour)
@@ -111,17 +112,22 @@ public class SmartWatchClient {
             try {
                 // Loop to send steps array to the server with delay of 1 sec
                 for (int steps : stepsArray) {
+                    
+                    if(ClientIdInterceptor.stopStreamInvalidID){
+                        break;
+                    }
+                    
                     // Building stepData message with steps and timeForFeedback
                     StepData stepData = StepData.newBuilder()
                             .setSteps(steps)
                             .setTimeForFeedback(timeForFeedback)
                             .build();
-
+                   
                     System.out.println("Sending steps: " + steps + " at " + LocalTime.now());
                     // Sending message to server
                     requestObserver.onNext(stepData);
                     // Wait 1 second between sending
-                    Thread.sleep(1000);
+                    Thread.sleep(3000);
                 }
             } catch (RuntimeException | InterruptedException e) {
                 // Printing stack trace and message error
@@ -139,8 +145,10 @@ public class SmartWatchClient {
                 amPm = "PM";
             }
 
-            System.out.println("Random hour: " + timeForFeedback + " " + amPm);
-
+            if(!ClientIdInterceptor.stopStreamInvalidID){
+                System.out.println("Random hour: " + timeForFeedback + " " + amPm);
+            }
+            
             // Finishing sending
             requestObserver.onCompleted();
 
