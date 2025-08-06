@@ -1,5 +1,6 @@
 package smartwatchClientStream;
 
+import GUI.GUISmartWatch;
 import com.generated.grpc.SmartWatchServiceGrpc;
 import com.generated.grpc.StepData;
 import com.generated.grpc.StepSummary;
@@ -46,8 +47,22 @@ public class SmartWatchClient {
                     .build();
 
             // Client ID string to send with requests
-            String clientId = userIDGUI;
-            
+            // The problem was to run from both: GUI (with and without input) and IDE
+            // and if there is no input in GUI, throw an error,
+            // but run from IDE using hardcoded 'test' clientID
+            String clientId = "";
+
+            if(GUISmartWatch.validID){
+                clientId = "valid";
+            } else if (GUISmartWatch.invalidID) {
+                clientId = "invalid";
+            }
+
+            // To run in IDE
+            if(!GUISmartWatch.isServerRunningWatch) {
+                clientId = "test";
+            }
+
             // Metadata container
             Metadata metadata = new Metadata();
             // Metadata key for "client-id"
@@ -102,8 +117,7 @@ public class SmartWatchClient {
 
             // Array of steps to send to the server
             int[] stepsArray = {
-                    900, 45, 50, 600, 35, 700, 800, 25, 400, 550,
-                    100, 120, 900, 300, 200, 750, 65, 500, 60, 40
+                    900, 450, 500, 600, 950, 700, 800, 250, 400, 550
             };
 
             // Random hour for feedback time (user sets this data initially, to receive a feedback at specific hour)
@@ -122,12 +136,12 @@ public class SmartWatchClient {
                             .setSteps(steps)
                             .setTimeForFeedback(timeForFeedback)
                             .build();
-                   
+
                     System.out.println("Sending steps: " + steps + " at " + LocalTime.now());
                     // Sending message to server
                     requestObserver.onNext(stepData);
                     // Wait 1 second between sending
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                 }
             } catch (RuntimeException | InterruptedException e) {
                 // Printing stack trace and message error

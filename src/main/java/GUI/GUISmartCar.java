@@ -155,7 +155,7 @@ public GUISmartCar() {
         jLabel13.setText("If \"Status\" is empty, will throw a remote error");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel14.setText("Button \"Simulate empty status\" will make status (Serious or Minor) empty, so the error will be thrown.");
+        jLabel14.setText("Button \"Simulate empty status\" will make status (Serious or Minor) empty, so the error will be thrown. The number can be submitted / resubmitted at any stage");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

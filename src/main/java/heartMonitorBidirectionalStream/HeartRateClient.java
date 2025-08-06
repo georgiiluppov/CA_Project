@@ -88,7 +88,7 @@ public class HeartRateClient {
                     System.out.println("Client cancelling the stream");
                     requestObserver.onError(
                             Status.CANCELLED
-                                    .withDescription("Client cancelled the stream after 5 messages")
+                                    .withDescription("Client cancelled the stream")
                                     .asRuntimeException()
                     );
                     break;

@@ -116,7 +116,7 @@ public class GUIMobileApp extends javax.swing.JPanel {
         jLabel4.setText("If this field is empty or input is invalid, the number will be randomly generated");
 
         simulateDelayButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        simulateDelayButton.setText("Simulate Delay");
+        simulateDelayButton.setText("Simulate Delay. ");
         simulateDelayButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 simulateDelayButtonActionPerformed(evt);

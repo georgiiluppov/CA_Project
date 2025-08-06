@@ -45,7 +45,7 @@ public class MobileAppClient {
 
             // Adding deadline of 60 seconds to stub (if server does not respond, it will stop)
             MobileAppServiceGrpc.MobileAppServiceStub asyncStub = MobileAppServiceGrpc.newStub(channel)
-                            .withDeadlineAfter(15, TimeUnit.SECONDS);
+                            .withDeadlineAfter(60, TimeUnit.SECONDS);
 
             try {
                 // Building request with interval (in this case just every sec to demonstrate)

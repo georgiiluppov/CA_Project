@@ -6,7 +6,9 @@ import smartwatchClientStream.SmartWatchServer;
 import javax.swing.*;
 
 public class GUISmartWatch extends javax.swing.JPanel {
-    private boolean isServerRunning = false;
+    public static boolean isServerRunningWatch = false;
+    public static boolean isClientRunningWatch = false;
+    public static String userIDGUI = "";
 
     public GUISmartWatch() {
         initComponents();
@@ -47,15 +49,15 @@ public class GUISmartWatch extends javax.swing.JPanel {
         textAreaClientSmartWatch = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        textFieldAuthorization = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        authorizationSubmitButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        setToValidButton = new javax.swing.JButton();
+        setToinValidButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Smart Watch - Client Stream");
@@ -89,25 +91,10 @@ public class GUISmartWatch extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel3.setText("2. Please, enter and submituser ID, possible options: \"watch-01\", \"watch-02\", \"watch-03\"");
-
-        textFieldAuthorization.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        textFieldAuthorization.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldAuthorizationActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("2. Please, press one of the buttons to set an ID");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("if this field is empty, will throw an error (remote authorization)");
-
-        authorizationSubmitButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        authorizationSubmitButton.setText("Submit");
-        authorizationSubmitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                authorizationSubmitButtonActionPerformed(evt);
-            }
-        });
+        jLabel4.setText("First will set ID to \"valid\", sesond to \"invalid\". If this step was skipped, will be assigned to valid");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 51, 51));
@@ -127,7 +114,23 @@ public class GUISmartWatch extends javax.swing.JPanel {
         jLabel9.setText("steps and hour. There is also a part with authorization, as a second step, user has to enter user ID in order to start stream. If it is not valid, the error will be thrown. In real life this data might");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel10.setText("be taken from database (does not let access to users who are not authorized,)");
+        jLabel10.setText("be taken from database (does not let access to users who are not authorized,) The ID can be submitted / resubmitted at any stage");
+
+        setToValidButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        setToValidButton.setText("Set to valid ID");
+        setToValidButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setToValidButtonActionPerformed(evt);
+            }
+        });
+
+        setToinValidButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        setToinValidButton.setText("Set to invalid ID");
+        setToinValidButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setToinValidButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -153,15 +156,15 @@ public class GUISmartWatch extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(55, 55, 55)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(textFieldAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(authorizationSubmitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(65, 65, 65))))
+                                .addComponent(setToValidButton, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(setToinValidButton))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -206,8 +209,8 @@ public class GUISmartWatch extends javax.swing.JPanel {
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(textFieldAuthorization, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(authorizationSubmitButton))))
+                            .addComponent(setToValidButton)
+                            .addComponent(setToinValidButton))))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addGap(3, 3, 3)
@@ -219,12 +222,34 @@ public class GUISmartWatch extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+    
+    public static boolean validID = false;
+    private void setToValidButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!isServerRunningWatch) {
+            JOptionPane.showMessageDialog(this, "Please, start the Server");
+            return;
+        }
+        invalidID = false;
+        validID = true;
+        textAreaClientSmartWatch.append("Will run with valid ID. ");
+    }
 
-    private void startServerSmartWatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerSmartWatchButtonActionPerformed
-        if (isServerRunning) {
+    public static boolean invalidID = false;
+    private void setToinValidButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!isServerRunningWatch) {
+            JOptionPane.showMessageDialog(this, "Please, start the Server");
+            return;
+        }
+        validID = false;
+        invalidID = true;
+        textAreaClientSmartWatch.append("Will run with invalid ID. ");
+    }
+
+    private void startServerSmartWatchButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        if (isServerRunningWatch) {
             return; 
         }
-        isServerRunning = true;
+        isServerRunningWatch = true;
         
         new Thread(() -> {
             java.io.PrintStream originalOut = System.out;
@@ -239,16 +264,21 @@ public class GUISmartWatch extends javax.swing.JPanel {
                 System.setOut(originalOut);
             }
         }).start();
-    }//GEN-LAST:event_startServerSmartWatchButtonActionPerformed
+    }
 
-    private void startClientSmartWatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startClientSmartWatchButtonActionPerformed
-        if (!isServerRunning) {
+    private void startClientSmartWatchButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!isServerRunningWatch) {
             SwingUtilities.invokeLater(() -> 
                 textAreaClientSmartWatch.append("Cannot start client: Server is not running.")
             );
-        return;
+            return;
         }
         
+        if(!validID && !invalidID){
+            validID = true;
+        }
+        
+        isClientRunningWatch = true;
         textAreaClientSmartWatch.append("Waiting for a respond...");
         
         new Thread(() -> {
@@ -263,28 +293,9 @@ public class GUISmartWatch extends javax.swing.JPanel {
                 System.setOut(originalOut);
             }
         }).start();
-    }//GEN-LAST:event_startClientSmartWatchButtonActionPerformed
+    }
     
-    private String userID = "";
-    private void authorizationSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorizationSubmitButtonActionPerformed
-        userID = textFieldAuthorization.getText().trim();
-        if (userID.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No ID entered. It will throw an error!");
-            SmartWatchClient.userIDGUI = ""; 
-        } else {
-            SmartWatchClient.userIDGUI = userID;
-            JOptionPane.showMessageDialog(this, "Client ID set to: " + userID);
-        }
-    }//GEN-LAST:event_authorizationSubmitButtonActionPerformed
-    
-
-    private void textFieldAuthorizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldAuthorizationActionPerformed
-
-    }//GEN-LAST:event_textFieldAuthorizationActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton authorizationSubmitButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -297,10 +308,11 @@ public class GUISmartWatch extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton setToValidButton;
+    private javax.swing.JButton setToinValidButton;
     private javax.swing.JButton startClientSmartWatchButton;
     private javax.swing.JButton startServerSmartWatchButton;
     private javax.swing.JTextArea textAreaClientSmartWatch;
     private javax.swing.JTextArea textAreaServerSmartWatch;
-    private javax.swing.JTextField textFieldAuthorization;
     // End of variables declaration//GEN-END:variables
 }
