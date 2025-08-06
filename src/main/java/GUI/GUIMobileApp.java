@@ -110,13 +110,13 @@ public class GUIMobileApp extends javax.swing.JPanel {
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Please enter how often you want to receive notifications between 1 and 10 (sec)");
+        jLabel3.setText("Please enter how often you want to receive notifications between 1 and 3 (sec)");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("If this field is empty or input is invalid, the number will be randomly generated");
 
         simulateDelayButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        simulateDelayButton.setText("Simulate Delay. ");
+        simulateDelayButton.setText("Simulate Delay");
         simulateDelayButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 simulateDelayButtonActionPerformed(evt);
@@ -124,7 +124,7 @@ public class GUIMobileApp extends javax.swing.JPanel {
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Simulate 15 sec delay, so deadline will be triggered");
+        jLabel5.setText("Simulate 30 sec delay, so deadline will be triggered");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Service Description:");
@@ -133,10 +133,10 @@ public class GUIMobileApp extends javax.swing.JPanel {
         jLabel7.setText("When Client is started, it sends request to the server (frequency of notifications in sec). The Server starts sending reminder every nTH second. If textarea is empty, random number will be");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setText("generated between 1 and 10 - and this num will be used as an amount of sec between reminders. Also Client can be unavailable, in this case there is a button below to simulate a delay. ");
+        jLabel8.setText("generated between 1 and 3 - and this num will be used as an amount of sec between reminders. Also Server can be unavailable, in this case there is a button below to simulate a delay. ");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setText("If the \"delay\" button was clicked, this will set the timeout for 15 seconds, which eventually will trigger the deadline in the Client (if server does not respond within 15 sec, it stops the stream)");
+        jLabel9.setText("If the \"delay\" button was clicked, this will set the timeout for 30 seconds, which eventually will trigger the deadline in the Client (if server does not respond within 30 sec, it stops the stream)");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 51, 51));
@@ -159,7 +159,7 @@ public class GUIMobileApp extends javax.swing.JPanel {
         jLabel14.setText(" (if empty or wrong input - random will be generated))");
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel15.setText("Server will send 30 reminders (for loop), unless the delay is simulated. (in real life can run until the Client \"unsubscribes\" from the server).");
+        jLabel15.setText("Server will send 10 reminders (for loop), unless the delay is simulated. (in real life can run until the Client \"unsubscribes\" from the server).");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -320,7 +320,7 @@ public class GUIMobileApp extends javax.swing.JPanel {
     }//GEN-LAST:event_startClientMobileAppActionPerformed
 
     private void inputMobileAppSecondsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputMobileAppSecondsActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_inputMobileAppSecondsActionPerformed
 
     private Integer userSec = null;
@@ -331,9 +331,9 @@ public class GUIMobileApp extends javax.swing.JPanel {
             MobileAppServer.secFromGUI = null; 
         } else {
             try {
-                int userSec = Integer.parseInt(input);
+                userSec = Integer.parseInt(input);
 
-                if (userSec >= 1 && userSec <= 10) {
+                if (userSec >= 1 && userSec <= 3) {
                     JOptionPane.showMessageDialog(this, "Number has been set: " + userSec);
                     MobileAppServer.secFromGUI = userSec; 
                 } else {
@@ -361,7 +361,6 @@ public class GUIMobileApp extends javax.swing.JPanel {
         }
         
         simulateDelayGUI = true;
-        textAreaMobileAppClient.append("Simulating delay 15 sec");
     }//GEN-LAST:event_simulateDelayButtonActionPerformed
 
 

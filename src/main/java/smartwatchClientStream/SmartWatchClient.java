@@ -47,8 +47,8 @@ public class SmartWatchClient {
                     .build();
 
             // Client ID string to send with requests
-            // The problem was to run from both: GUI (with and without input) and IDE
-            // and if there is no input in GUI, throw an error,
+            // The problem was to run from both: GUI (with and without button clicked) and IDE
+            // and if 'invalid' button was clicked in GUI, throw an error,
             // but run from IDE using hardcoded 'test' clientID
             String clientId = "";
 

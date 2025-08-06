@@ -111,10 +111,10 @@ public class GUISmartWatch extends javax.swing.JPanel {
         jLabel8.setText("Depending on the \"hour\" user will see a different feedback (it is just basically a randomly generated number between 1 and 23). After that, Server sends feedback depending on how many");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setText("steps and hour. There is also a part with authorization, as a second step, user has to enter user ID in order to start stream. If it is not valid, the error will be thrown. In real life this data might");
+        jLabel9.setText("steps and hour. There is also a part with authorization, as a second step, user has to either set to valid/invalid user ID. If it is not valid, the error will be thrown. In real life this data might");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel10.setText("be taken from database (does not let access to users who are not authorized,) The ID can be submitted / resubmitted at any stage");
+        jLabel10.setText("be taken from database (does not let access to users who are not authorized,). Set to valid will \"authorize\" user as a valid user, and invalid will throw an arror, as there is not such a user ID. ");
 
         setToValidButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         setToValidButton.setText("Set to valid ID");
@@ -182,7 +182,7 @@ public class GUISmartWatch extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel10)))
-                .addGap(0, 25, Short.MAX_VALUE))
+                .addGap(0, 34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

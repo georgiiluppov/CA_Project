@@ -69,7 +69,7 @@ public class HeartRateClient {
             });
 
 
-            // Send 30 heart rate messages to the server, 1 per 5 seconds
+            // Send 30 heart rate messages to the server, 1 per 3 seconds
             for (int i = 0; i < 30; i++) {
                 // Generate a random bpm value between 10 and 250 (BPM)
                 int bpm = 10 + (int) (Math.random() * 241);
@@ -82,7 +82,7 @@ public class HeartRateClient {
                 requestObserver.onNext(heartRate);
 
                 // Sleep for 3 seconds before sending next message
-                Thread.sleep(5000);
+                Thread.sleep(3000);
 
                 if (GUIHeartMonitor.stopStreamGUI){
                     System.out.println("Client cancelling the stream");

@@ -57,8 +57,9 @@ public class SmartCarClient {
             }
 
             // Define accident status based on severity
+            // Can be received from GUI, so it will be assigned to empty string
+            // Otherwise will be assigned to a Minor/Serious depending on a severity number
             String status;
-            
             if (GUISmartCar.makeStatusEmptyGUI){
                 status = "";
             } else if (severity <= 5){

@@ -246,7 +246,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Please enter how often you want to receive notifications between 1 and 10 (sec)"/>
+        <Property name="text" type="java.lang.String" value="Please enter how often you want to receive notifications between 1 and 3 (sec)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -273,7 +273,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Simulate 15 sec delay, so deadline will be triggered"/>
+        <Property name="text" type="java.lang.String" value="Simulate 30 sec delay, so deadline will be triggered"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
@@ -297,7 +297,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="generated between 1 and 10 - and this num will be used as an amount of sec between reminders. Also Client can be unavailable, in this case there is a button below to simulate a delay. "/>
+        <Property name="text" type="java.lang.String" value="generated between 1 and 3 - and this num will be used as an amount of sec between reminders. Also Server can be unavailable, in this case there is a button below to simulate a delay. "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
@@ -305,7 +305,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="If the &quot;delay&quot; button was clicked, this will set the timeout for 15 seconds, which eventually will trigger the deadline in the Client (if server does not respond within 15 sec, it stops the stream)"/>
+        <Property name="text" type="java.lang.String" value="If the &quot;delay&quot; button was clicked, this will set the timeout for 30 seconds, which eventually will trigger the deadline in the Client (if server does not respond within 30 sec, it stops the stream)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
@@ -368,7 +368,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Server will send 30 reminders (for loop), unless the delay is simulated. (in real life can run until the Client &quot;unsubscribes&quot; from the server)."/>
+        <Property name="text" type="java.lang.String" value="Server will send 10 reminders (for loop), unless the delay is simulated. (in real life can run until the Client &quot;unsubscribes&quot; from the server)."/>
       </Properties>
     </Component>
   </SubComponents>

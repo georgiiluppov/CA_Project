@@ -79,7 +79,7 @@
                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="0" pref="25" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="34" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -257,7 +257,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="steps and hour. There is also a part with authorization, as a second step, user has to enter user ID in order to start stream. If it is not valid, the error will be thrown. In real life this data might"/>
+        <Property name="text" type="java.lang.String" value="steps and hour. There is also a part with authorization, as a second step, user has to either set to valid/invalid user ID. If it is not valid, the error will be thrown. In real life this data might"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
@@ -265,7 +265,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="be taken from database (does not let access to users who are not authorized,) The ID can be submitted / resubmitted at any stage"/>
+        <Property name="text" type="java.lang.String" value="be taken from database (does not let access to users who are not authorized,). Set to valid will &quot;authorize&quot; user as a valid user, and invalid will throw an arror, as there is not such a user ID. "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="setToValidButton">

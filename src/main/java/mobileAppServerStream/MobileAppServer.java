@@ -8,7 +8,6 @@ import com.generated.grpc.MobileAppServiceGrpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.logging.Logger;
@@ -47,6 +46,9 @@ public class MobileAppServer extends MobileAppServiceGrpc.MobileAppServiceImplBa
 
     @Override
     public void hydrationReminder(HydrationRequest request, StreamObserver<HydrationNotification> responseObserver) {
+
+        // Sec variable either assigned in GUI (possible options from 1 to 3 sec reminders)
+        // If not assigned in GUI, will be randomly generated from 1 to 3 (to run in IDE)
         int sec;
         if (secFromGUI != null) {
             sec = secFromGUI;
@@ -74,7 +76,8 @@ public class MobileAppServer extends MobileAppServiceGrpc.MobileAppServiceImplBa
 
                 // This part is to simulate server delay longer than deadline of the client (65s)
                 if (GUIMobileApp.simulateDelayGUI){
-                    Thread.sleep((long) sec * 10 * 100);
+                    System.out.println("Simulating long delay... " + LocalTime.now());
+                    Thread.sleep(35000);
                     break;
                 }
             }

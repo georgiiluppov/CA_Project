@@ -4,7 +4,8 @@ import io.grpc.*;
 public class ClientIdInterceptor implements ServerInterceptor {
     public static boolean stopStreamInvalidID = false;
     // Interceptor to check client ID from request metadata (in case if it is empty)
-    // or for the future work, like sorting users etc
+    // or for the future work, like sorting users etc. ID in reality would be something more
+    // meaningful, for example 'watch-x0909x'
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(
             ServerCall<ReqT, RespT> call,
@@ -21,7 +22,7 @@ public class ClientIdInterceptor implements ServerInterceptor {
             stopStreamInvalidID = true;
             // Return empty listener to stop call processing
             return new ServerCall.Listener<ReqT>() {};
-        } else if (!clientId.equals("valid") && !clientId.equals("test")){
+        } else if (!clientId.equals("valid") && !clientId.equals("test")){ // Only 2 possible IDs to test
             stopStreamInvalidID = true;
             call.close(Status.PERMISSION_DENIED.withDescription("Invalid client ID"), new Metadata());
             return new ServerCall.Listener<ReqT>() {};
