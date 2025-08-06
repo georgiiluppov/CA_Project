@@ -34,14 +34,13 @@ public final class MobileAppServerStream {
   static {
     java.lang.String[] descriptorData = {
       "\n\033mobileAppServerStream.proto\022\025mobileApp" +
-      "ServerStream\"+\n\020HydrationRequest\022\027\n\017inte" +
-      "rvalMinutes\030\001 \001(\001\";\n\025HydrationNotificati" +
-      "on\022\021\n\ttimestamp\030\001 \001(\005\022\017\n\007message\030\002 \001(\t2\200" +
-      "\001\n\020MobileAppService\022l\n\021hydrationReminder" +
-      "\022\'.mobileAppServerStream.HydrationReques" +
-      "t\032,.mobileAppServerStream.HydrationNotif" +
-      "ication0\001B\026\n\022com.generated.grpcP\001b\006proto" +
-      "3"
+      "ServerStream\"\022\n\020HydrationRequest\";\n\025Hydr" +
+      "ationNotification\022\021\n\ttimestamp\030\001 \001(\005\022\017\n\007" +
+      "message\030\002 \001(\t2\200\001\n\020MobileAppService\022l\n\021hy" +
+      "drationReminder\022\'.mobileAppServerStream." +
+      "HydrationRequest\032,.mobileAppServerStream" +
+      ".HydrationNotification0\001B\026\n\022com.generate" +
+      "d.grpcP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -60,7 +59,7 @@ public final class MobileAppServerStream {
     internal_static_mobileAppServerStream_HydrationRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_mobileAppServerStream_HydrationRequest_descriptor,
-        new java.lang.String[] { "IntervalMinutes", });
+        new java.lang.String[] { });
     internal_static_mobileAppServerStream_HydrationNotification_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_mobileAppServerStream_HydrationNotification_fieldAccessorTable = new

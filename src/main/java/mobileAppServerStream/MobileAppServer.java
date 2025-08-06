@@ -74,7 +74,7 @@ public class MobileAppServer extends MobileAppServiceGrpc.MobileAppServiceImplBa
                 // Simulate interval delay between reminders (interval * 10 * 100ms)
                 Thread.sleep((long) sec * 10 * 100);
 
-                // This part is to simulate server delay longer than deadline of the client (65s)
+                // This part is to simulate server delay longer than deadline of the client (30 sec)
                 if (GUIMobileApp.simulateDelayGUI){
                     System.out.println("Simulating long delay... " + LocalTime.now());
                     Thread.sleep(35000);

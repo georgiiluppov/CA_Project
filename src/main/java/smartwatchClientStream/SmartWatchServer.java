@@ -58,13 +58,11 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
                 hour = stepData.getTimeForFeedback();
                 // Add steps to list
                 stepsList.add(stepData.getSteps());
-                System.out.println("Received steps: " + stepData.getSteps() + ". " + LocalTime.now());
-                System.out.println("--------------------------------------");
             }
 
             @Override
             public void onError(Throwable t) {
-                System.err.println("Error receiving steps: " + t);
+                System.out.println("Error receiving steps: " + t);
             }
 
             @Override
@@ -83,7 +81,7 @@ public class SmartWatchServer extends SmartWatchServiceGrpc.SmartWatchServiceImp
                 String feedback;
 
                 // Provide feedback based on time (the client set to receive) and total steps by that moment
-                if (hour < 23) {
+                if (hour < 21) {
                     if (totalSteps < 5000) {
                         feedback = "Try to walk more, you still have time today! Total steps: " + totalSteps;
                     } else {

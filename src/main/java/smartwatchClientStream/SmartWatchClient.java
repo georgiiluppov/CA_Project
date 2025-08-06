@@ -155,7 +155,7 @@ public class SmartWatchClient {
             String amPm = "";
             if (timeForFeedback >= 0 && timeForFeedback < 12) {
                 amPm = "AM";
-            } else if (timeForFeedback >= 12 && timeForFeedback <= 23) {
+            } else if (timeForFeedback >= 12 && timeForFeedback <= 24) {
                 amPm = "PM";
             }
 

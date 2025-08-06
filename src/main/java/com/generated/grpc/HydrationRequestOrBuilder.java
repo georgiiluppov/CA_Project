@@ -6,13 +6,4 @@ package com.generated.grpc;
 public interface HydrationRequestOrBuilder extends
     // @@protoc_insertion_point(interface_extends:mobileAppServerStream.HydrationRequest)
     com.google.protobuf.MessageOrBuilder {
-
-  /**
-   * <pre>
-   * User preferred interval between reminders
-   * </pre>
-   *
-   * <code>double intervalMinutes = 1;</code>
-   */
-  double getIntervalMinutes();
 }

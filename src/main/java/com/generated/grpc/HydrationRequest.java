@@ -16,7 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private HydrationRequest() {
-    intervalMinutes_ = 0D;
   }
 
   @java.lang.Override
@@ -32,7 +31,6 @@ private static final long serialVersionUID = 0L;
     if (extensionRegistry == null) {
       throw new java.lang.NullPointerException();
     }
-    int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
         com.google.protobuf.UnknownFieldSet.newBuilder();
     try {
@@ -43,11 +41,6 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 9: {
-
-            intervalMinutes_ = input.readDouble();
-            break;
-          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -80,19 +73,6 @@ private static final long serialVersionUID = 0L;
             com.generated.grpc.HydrationRequest.class, com.generated.grpc.HydrationRequest.Builder.class);
   }
 
-  public static final int INTERVALMINUTES_FIELD_NUMBER = 1;
-  private double intervalMinutes_;
-  /**
-   * <pre>
-   * User preferred interval between reminders
-   * </pre>
-   *
-   * <code>double intervalMinutes = 1;</code>
-   */
-  public double getIntervalMinutes() {
-    return intervalMinutes_;
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -107,9 +87,6 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (intervalMinutes_ != 0D) {
-      output.writeDouble(1, intervalMinutes_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -119,10 +96,6 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (intervalMinutes_ != 0D) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(1, intervalMinutes_);
-    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -139,10 +112,6 @@ private static final long serialVersionUID = 0L;
     com.generated.grpc.HydrationRequest other = (com.generated.grpc.HydrationRequest) obj;
 
     boolean result = true;
-    result = result && (
-        java.lang.Double.doubleToLongBits(getIntervalMinutes())
-        == java.lang.Double.doubleToLongBits(
-            other.getIntervalMinutes()));
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -154,9 +123,6 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + INTERVALMINUTES_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getIntervalMinutes()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -290,8 +256,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      intervalMinutes_ = 0D;
-
       return this;
     }
 
@@ -318,7 +282,6 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.generated.grpc.HydrationRequest buildPartial() {
       com.generated.grpc.HydrationRequest result = new com.generated.grpc.HydrationRequest(this);
-      result.intervalMinutes_ = intervalMinutes_;
       onBuilt();
       return result;
     }
@@ -367,9 +330,6 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(com.generated.grpc.HydrationRequest other) {
       if (other == com.generated.grpc.HydrationRequest.getDefaultInstance()) return this;
-      if (other.getIntervalMinutes() != 0D) {
-        setIntervalMinutes(other.getIntervalMinutes());
-      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -396,44 +356,6 @@ private static final long serialVersionUID = 0L;
           mergeFrom(parsedMessage);
         }
       }
-      return this;
-    }
-
-    private double intervalMinutes_ ;
-    /**
-     * <pre>
-     * User preferred interval between reminders
-     * </pre>
-     *
-     * <code>double intervalMinutes = 1;</code>
-     */
-    public double getIntervalMinutes() {
-      return intervalMinutes_;
-    }
-    /**
-     * <pre>
-     * User preferred interval between reminders
-     * </pre>
-     *
-     * <code>double intervalMinutes = 1;</code>
-     */
-    public Builder setIntervalMinutes(double value) {
-      
-      intervalMinutes_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * User preferred interval between reminders
-     * </pre>
-     *
-     * <code>double intervalMinutes = 1;</code>
-     */
-    public Builder clearIntervalMinutes() {
-      
-      intervalMinutes_ = 0D;
-      onChanged();
       return this;
     }
     @java.lang.Override

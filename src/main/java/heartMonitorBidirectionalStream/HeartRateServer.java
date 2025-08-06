@@ -83,7 +83,7 @@ public class HeartRateServer extends HeartRateServiceGrpc.HeartRateServiceImplBa
                     logger.info("Stream cancelled by client.");
                 } else {
                     // Log any other errors
-                    System.err.println("Error: " + t.getMessage());
+                    System.out.println("Error: " + t.getMessage());
                     logger.warning("Error: " + t.getMessage());
                 }
             }
